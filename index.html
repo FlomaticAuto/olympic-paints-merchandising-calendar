@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OP Calendar">
+<meta name="theme-color" content="#0D0D0B" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)">
+<link rel="apple-touch-icon" href="logo.jpg">
+<title>Merchandising Calendar — Olympic Paints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>var t=localStorage.getItem('oly-theme');if(t)document.documentElement.className=t;</script>
+<style>
+/* ── TOKENS ──────────────────────────────────────────────────────────────── */
+:root {
+  --_y50:#FEF9E0;--_y100:#FDF0A0;--_y200:#FAE04D;--_y400:#F5C400;--_y600:#D4A800;--_y800:#A88000;--_y900:#6A5000;
+  --_n50:#E8EFF8;--_n100:#B8CCE8;--_n300:#6B9ED0;--_n500:#2D6BA8;--_n700:#1A3D6E;--_n900:#0D2040;--_n950:#071022;
+  --_g0:#FFFFFF;--_g50:#F7F6F3;--_g100:#E8E7E2;--_g200:#C8C7C0;--_g400:#949390;--_g600:#5C5B58;--_g800:#2E2E2C;--_g900:#1A1A18;--_g950:#0D0D0B;
+  --_teal:#2D8C7A;--_teal-light:#C8EDE7;--_teal-dark:#1a5c50;
+  --_terra:#C97A3A;--_coral:#E86060;--_coral-light:#FDDCDC;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:50px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-top:env(safe-area-inset-top,0px);
+}
+.theme-light {
+  color-scheme:light;
+  --color-surface-page:var(--_g50);--color-surface-base:var(--_g0);--color-surface-elevated:var(--_g0);--color-surface-sunken:var(--_g100);
+  --color-surface-secondary:var(--_n700);
+  --color-text-primary:var(--_g950);--color-text-secondary:var(--_g600);--color-text-tertiary:var(--_g400);
+  --color-text-on-brand:var(--_g950);--color-text-on-navy:var(--_g0);
+  --color-brand-primary:var(--_y400);--color-brand-hover:var(--_y600);
+  --color-border-subtle:var(--_g100);--color-border-default:var(--_g200);--color-border-strong:var(--_g400);--color-border-brand:var(--_y400);
+  --color-success-bg:#EDF7F5;--color-success-fg:var(--_teal-dark);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 10px 30px rgba(0,0,0,.10);
+}
+.theme-dark {
+  color-scheme:dark;
+  --color-surface-page:var(--_g950);--color-surface-base:var(--_g900);--color-surface-elevated:var(--_g800);--color-surface-sunken:var(--_g950);
+  --color-surface-secondary:var(--_n700);
+  --color-text-primary:var(--_g100);--color-text-secondary:var(--_g400);--color-text-tertiary:var(--_g600);
+  --color-text-on-brand:var(--_g950);--color-text-on-navy:var(--_g0);
+  --color-brand-primary:var(--_y400);--color-brand-hover:var(--_y200);
+  --color-border-subtle:rgba(255,255,255,.06);--color-border-default:rgba(255,255,255,.10);--color-border-strong:rgba(255,255,255,.20);--color-border-brand:var(--_y400);
+  --color-success-bg:rgba(45,140,122,.12);--color-success-fg:var(--_teal-light);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.40);--shadow-md:0 4px 12px rgba(0,0,0,.40);--shadow-lg:0 10px 30px rgba(0,0,0,.50);
+}
+.theme-brand {
+  color-scheme:light;
+  --color-surface-page:var(--_y400);--color-surface-base:var(--_y200);--color-surface-elevated:var(--_y50);--color-surface-sunken:var(--_y600);
+  --color-surface-secondary:var(--_g950);
+  --color-text-primary:var(--_g950);--color-text-secondary:var(--_y900);--color-text-tertiary:var(--_y800);
+  --color-text-on-brand:var(--_g950);--color-text-on-navy:var(--_g0);
+  --color-brand-primary:var(--_g950);--color-brand-hover:var(--_n700);
+  --color-border-subtle:rgba(0,0,0,.08);--color-border-default:rgba(0,0,0,.14);--color-border-strong:rgba(0,0,0,.25);--color-border-brand:var(--_g950);
+  --color-success-bg:rgba(45,140,122,.12);--color-success-fg:var(--_teal-dark);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.12);--shadow-md:0 4px 12px rgba(0,0,0,.14);--shadow-lg:0 10px 30px rgba(0,0,0,.18);
+}
+.theme-navy {
+  color-scheme:dark;
+  --color-surface-page:var(--_n950);--color-surface-base:var(--_n900);--color-surface-elevated:var(--_n700);--color-surface-sunken:var(--_n950);
+  --color-surface-secondary:var(--_n700);
+  --color-text-primary:var(--_g0);--color-text-secondary:var(--_n100);--color-text-tertiary:var(--_n300);
+  --color-text-on-brand:var(--_g950);--color-text-on-navy:var(--_g0);
+  --color-brand-primary:var(--_y400);--color-brand-hover:var(--_y200);
+  --color-border-subtle:rgba(107,158,208,.12);--color-border-default:rgba(107,158,208,.20);--color-border-strong:rgba(107,158,208,.35);--color-border-brand:var(--_y400);
+  --color-success-bg:rgba(45,140,122,.15);--color-success-fg:var(--_teal-light);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.50);--shadow-md:0 4px 12px rgba(0,0,0,.50);--shadow-lg:0 10px 30px rgba(0,0,0,.60);
+}
+
+/* ── BASE ───────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--color-surface-page);color:var(--color-text-primary);font-family:var(--font-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── APP SHELL ──────────────────────────────────────────────────────────── */
+.app-shell{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+
+/* ── TOP BAR ────────────────────────────────────────────────────────────── */
+.top-bar{
+  background:var(--color-surface-secondary);
+  padding:calc(8px + var(--safe-top)) 16px 8px;
+  display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:var(--shadow-md);
+}
+.top-bar-title{flex:1;min-width:0}
+.top-bar-title .eyebrow{
+  font-family:var(--font-display);font-size:10px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--color-brand-primary);
+}
+.top-bar-title h1{
+  font-family:var(--font-display);font-size:20px;font-weight:800;text-transform:uppercase;
+  color:var(--color-text-on-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.theme-bar{display:flex;gap:4px}
+.theme-bar button{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:var(--color-text-secondary);font-family:var(--font-body);font-size:11px;font-weight:500;
+  padding:4px 8px;border-radius:var(--r-pill);cursor:pointer;transition:all .15s;
+}
+.theme-bar button.active,.theme-bar button:hover{
+  background:var(--color-brand-primary);color:var(--color-text-on-brand);border-color:var(--color-brand-primary);
+}
+
+/* ── MONTH NAV ──────────────────────────────────────────────────────────── */
+.month-nav{
+  background:var(--color-surface-base);padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--color-border-subtle);
+}
+.month-nav button{
+  background:var(--color-surface-elevated);border:1px solid var(--color-border-default);
+  color:var(--color-text-primary);width:40px;height:40px;border-radius:var(--r-md);
+  cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.month-nav button:hover{background:var(--color-brand-primary);color:var(--color-text-on-brand);border-color:var(--color-brand-primary)}
+.month-label{font-family:var(--font-display);font-size:24px;font-weight:800;text-transform:uppercase}
+.month-label span{color:var(--color-brand-primary);margin-left:6px}
+
+/* ── STATS BAR ──────────────────────────────────────────────────────────── */
+.stats-bar{
+  background:var(--color-surface-sunken);padding:10px 16px;
+  display:flex;gap:16px;overflow-x:auto;
+  border-bottom:1px solid var(--color-border-subtle);scrollbar-width:none;
+}
+.stats-bar::-webkit-scrollbar{display:none}
+.stat-item{display:flex;flex-direction:column;align-items:center;flex-shrink:0;min-width:52px}
+.stat-num{font-family:var(--font-display);font-size:24px;font-weight:900;color:var(--color-brand-primary);line-height:1}
+.stat-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-secondary);margin-top:2px;text-align:center}
+.stat-divider{width:1px;background:var(--color-border-subtle);align-self:stretch;flex-shrink:0}
+
+/* ── FILTER BAR ─────────────────────────────────────────────────────────── */
+.filter-bar{
+  background:var(--color-surface-base);padding:10px 16px;
+  display:flex;gap:8px;overflow-x:auto;
+  border-bottom:1px solid var(--color-border-subtle);
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.filter-bar::-webkit-scrollbar{display:none}
+.filter-chip{
+  background:var(--color-surface-elevated);border:1.5px solid var(--color-border-default);
+  color:var(--color-text-secondary);font-family:var(--font-body);font-size:13px;font-weight:600;
+  padding:7px 16px;border-radius:var(--r-pill);cursor:pointer;white-space:nowrap;
+  transition:all .15s;flex-shrink:0;
+}
+.filter-chip.active{color:#000;border-color:transparent;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+
+/* ── CALENDAR GRID ──────────────────────────────────────────────────────── */
+.calendar-wrap{flex:1;padding:0 10px 110px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.day-headers{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:10px 0 6px}
+.day-hdr{
+  text-align:center;font-family:var(--font-display);font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-secondary);
+}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-cell{
+  background:var(--color-surface-base);border:1px solid var(--color-border-subtle);
+  border-radius:var(--r-md);min-height:58px;padding:6px 4px 4px;
+  position:relative;overflow:hidden;transition:all .15s;
+}
+.cal-cell.has-bookings{cursor:pointer;border-color:var(--color-border-default)}
+.cal-cell.has-bookings:active{transform:scale(.97)}
+.cal-cell.has-bookings:hover{border-color:var(--color-brand-primary);box-shadow:0 0 0 1px var(--color-brand-primary)}
+.cal-cell.selected{border-color:var(--color-brand-primary)!important;box-shadow:0 0 0 2px var(--color-brand-primary)}
+.cal-cell.today .day-num{
+  background:var(--color-brand-primary);color:var(--color-text-on-brand);
+  border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+}
+.cal-cell.other-month{opacity:.2;pointer-events:none}
+.day-num{
+  font-family:var(--font-display);font-size:14px;font-weight:700;
+  color:var(--color-text-primary);display:block;margin-bottom:4px;
+}
+.booking-dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.booking-count{
+  position:absolute;bottom:3px;right:4px;
+  font-family:var(--font-display);font-size:10px;font-weight:700;color:var(--color-text-tertiary);
+}
+
+/* ── BOTTOM SHEET ───────────────────────────────────────────────────────── */
+.sheet-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;backdrop-filter:blur(3px)}
+.sheet-backdrop.open{display:block}
+.bottom-sheet{
+  position:fixed;bottom:0;left:0;right:0;z-index:300;
+  background:var(--color-surface-base);border-radius:20px 20px 0 0;
+  padding-bottom:calc(80px + var(--safe-bottom));
+  max-height:82vh;overflow-y:auto;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);
+  box-shadow:0 -8px 40px rgba(0,0,0,.5);
+}
+.bottom-sheet.open{transform:translateY(0)}
+.sheet-handle{width:36px;height:4px;background:var(--color-border-strong);border-radius:2px;margin:12px auto 0}
+.sheet-header{padding:12px 52px 14px 20px;border-bottom:1px solid var(--color-border-subtle);position:relative}
+.sheet-date{font-family:var(--font-display);font-size:22px;font-weight:800;text-transform:uppercase}
+.sheet-subtitle{font-size:12px;color:var(--color-text-secondary);margin-top:3px}
+.sheet-close{
+  position:absolute;right:14px;top:14px;background:var(--color-surface-elevated);
+  border:none;color:var(--color-text-primary);width:34px;height:34px;
+  border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;
+}
+.sheet-body{padding:12px 16px}
+
+/* ── BOOKING CARD ───────────────────────────────────────────────────────── */
+.booking-card{
+  background:var(--color-surface-elevated);border-radius:var(--r-lg);
+  padding:14px 16px;margin-bottom:10px;border-left:3px solid #888;
+}
+.rep-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--font-display);font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;
+}
+.rep-dot{width:8px;height:8px;border-radius:50%}
+.store-name{
+  font-family:var(--font-display);font-size:19px;font-weight:800;
+  text-transform:uppercase;color:var(--color-text-primary);margin-bottom:4px;
+}
+.store-meta{
+  font-size:13px;color:var(--color-text-secondary);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;
+}
+.meta-pill{
+  background:var(--color-surface-sunken);padding:3px 9px;border-radius:var(--r-pill);
+  font-size:11px;font-weight:500;
+}
+.status-pill{
+  background:var(--color-success-bg);color:var(--color-success-fg);
+  padding:3px 9px;border-radius:var(--r-pill);font-size:11px;font-weight:600;
+}
+.notes-label{
+  font-family:var(--font-display);font-size:10px;font-weight:700;
+  letter-spacing:.10em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:4px;
+}
+.notes-block{
+  background:var(--color-surface-sunken);border-radius:var(--r-md);
+  padding:10px 12px;font-size:13px;color:var(--color-text-secondary);
+  line-height:1.55;white-space:pre-wrap;
+}
+
+/* ── LIST VIEW ──────────────────────────────────────────────────────────── */
+.list-view{display:none;flex:1;padding:12px 12px 110px;overflow-y:auto}
+.list-view.visible{display:block}
+.list-date-group{margin-bottom:20px}
+.list-date-label{
+  font-family:var(--font-display);font-size:13px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--color-text-secondary);
+  padding:4px 4px 8px;border-bottom:1px solid var(--color-border-subtle);margin-bottom:8px;
+}
+
+/* ── BOTTOM NAV ─────────────────────────────────────────────────────────── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:150;
+  background:var(--color-surface-secondary);border-top:1px solid var(--color-border-subtle);
+  display:flex;align-items:center;justify-content:space-around;
+  padding:8px 0 calc(8px + var(--safe-bottom));
+  box-shadow:0 -4px 20px rgba(0,0,0,.3);
+}
+.nav-btn{
+  background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:4px 16px;border-radius:var(--r-md);color:var(--color-text-secondary);
+  transition:all .15s;min-width:64px;
+}
+.nav-btn.active{color:var(--color-brand-primary)}
+.nav-btn svg{width:22px;height:22px}
+.nav-btn span{font-family:var(--font-display);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── EMPTY STATE ────────────────────────────────────────────────────────── */
+.empty-state{
+  text-align:center;padding:48px 24px;
+  color:var(--color-text-tertiary);font-size:14px;
+}
+.empty-state svg{width:48px;height:48px;margin:0 auto 12px;display:block;opacity:.3}
+
+/* ── DESKTOP ────────────────────────────────────────────────────────────── */
+@media (min-width:768px){
+  .bottom-nav{display:none}
+  .calendar-wrap{padding-bottom:24px}
+  .main-area{display:grid;grid-template-columns:1fr 360px;align-items:start}
+  .desktop-side{
+    padding:12px;position:sticky;top:0;
+    max-height:calc(100vh - 200px);overflow-y:auto;
+  }
+  .desktop-detail{
+    background:var(--color-surface-base);border-radius:var(--r-xl);
+    border:1px solid var(--color-border-subtle);overflow:hidden;
+  }
+  .bottom-sheet,.sheet-backdrop{display:none!important}
+  .cal-cell{min-height:80px}
+  .day-num{font-size:15px}
+  .cal-grid{gap:5px}
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+      <img src="logo.jpg" alt="Olympic Paints" width="36" height="36"
+           style="display:block;width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="top-bar-title">
+      <div class="eyebrow">Olympic Paints</div>
+      <h1>Merch Calendar</h1>
+    </div>
+    <div class="theme-bar">
+      <button onclick="olyTheme('theme-light',this)">L</button>
+      <button onclick="olyTheme('theme-dark',this)">D</button>
+      <button onclick="olyTheme('theme-brand',this)">B</button>
+      <button onclick="olyTheme('theme-navy',this)">N</button>
+    </div>
+  </header>
+
+  <!-- MONTH NAV -->
+  <div class="month-nav">
+    <button onclick="shiftMonth(-1)" aria-label="Previous">&#8249;</button>
+    <div class="month-label" id="monthLabel"></div>
+    <button onclick="shiftMonth(1)" aria-label="Next">&#8250;</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar" id="filterBar"></div>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <div id="calView">
+      <div class="calendar-wrap">
+        <div class="day-headers" id="dayHeaders"></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+    </div>
+
+    <!-- Desktop side panel -->
+    <div class="desktop-side" id="desktopSide" style="display:none">
+      <div class="desktop-detail" id="desktopDetail">
+        <div class="sheet-header">
+          <div class="sheet-date" id="ddDate">Select a day</div>
+          <div class="sheet-subtitle" id="ddSub">Tap any highlighted date</div>
+        </div>
+        <div class="sheet-body" id="ddBody"></div>
+      </div>
+    </div>
+
+    <!-- List view -->
+    <div class="list-view" id="listView"></div>
+  </div>
+
+</div><!-- /.app-shell -->
+
+<!-- Mobile bottom sheet -->
+<div class="sheet-backdrop" id="backdrop" onclick="closeSheet()"></div>
+<div class="bottom-sheet" id="mobileSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-date" id="sheetDate"></div>
+    <div class="sheet-subtitle" id="sheetSub"></div>
+    <button class="sheet-close" onclick="closeSheet()">&#x2715;</button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<!-- Bottom nav (mobile) -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="navCal" onclick="switchView('cal')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    <span>Month</span>
+  </button>
+  <button class="nav-btn" id="navList" onclick="switchView('list')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+      <line x1="8" y1="18" x2="21" y2="18"/>
+      <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/>
+      <line x1="3" y1="18" x2="3.01" y2="18"/>
+    </svg>
+    <span>List</span>
+  </button>
+  <button class="nav-btn" onclick="goToday()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+    <span>Today</span>
+  </button>
+</nav>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const BOOKINGS    = [{"id": "AUDIT-1778141635064-DJ81DZ9VY", "booked_by": "Aboo", "store": "Board City", "location": "Lenasia", "manager": "Tinkle", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-08", "time": "09:00", "notes": "Pallet decor bellow the buckets. & Make sure stock is packed 3 high.Proper colour boards related to product at the end of the \nGondola", "status": "Logged"}, {"id": "AUDIT-1778142395545-4HD12X3UZ", "booked_by": "Aboo", "store": "Board City", "location": "Lenasia", "manager": "Tinkle", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-08", "time": "09:00", "notes": "Pallet decor bellow the buckets. & Make sure stock is packed 3 high.Proper colour boards related to product at the end of the \nGondola", "status": "Logged"}, {"id": "AUDIT-1778156813646-TOFBYQ3GW", "booked_by": "Nikhil", "store": "Easy build jubilee mall Hamanskral", "location": "Hamanskral", "manager": "Ibrahim / Charls", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-11", "time": "08:30", "notes": "Customer keeps decor mq QD varnish hi hiding master deco \n\nPlease take 6 Olympic diaries and give it to Ibrahim or Charls", "status": "Logged"}, {"id": "AUDIT-1778156942314-BAH5BNRTX", "booked_by": "Nikhil", "store": "Easy build jubilee mall Hamanskral", "location": "Hamanskral", "manager": "Ibrahim / Charls", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-11", "time": "08:30", "notes": "Customer keeps decor mq QD varnish hi hiding master deco \n\nPlease take 6 Olympic diaries and give it to Ibrahim or Charls", "status": "Logged"}, {"id": "AUDIT-1778158073045-4SEHDRHTC", "booked_by": "Nikhil", "store": "Easy build jubilee mall Hamanskral", "location": "Hamanskral", "manager": "Ibrahim / Charls", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-11", "time": "08:30", "notes": "Customer keeps decor mq QD varnish hi hiding master deco \n\nPlease take 6 Olympic diaries and give it to Ibrahim or Charls", "status": "Logged"}, {"id": "AUDIT-1778158114024-TAW4BLNZU", "booked_by": "Nikhil", "store": "Easy build jubilee mall Hamanskral", "location": "Hamanskral", "manager": "Ibrahim / Charls", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-11", "time": "08:30", "notes": "Customer keeps decor mq QD varnish hi hiding master deco \n\nPlease take 6 Olympic diaries and give it to Ibrahim or Charls", "status": "Logged"}, {"id": "AUDIT-1778159039128-YSAU9W0GT", "booked_by": "Nikhil", "store": "Easy build jubilee mall Hamanskral", "location": "Hamanskral", "manager": "Ibrahim / Charls", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-11", "time": "08:30", "notes": "Customer keeps decor mq QD varnish hi hiding master deco \n\nPlease take 6 Olympic diaries and give it to Ibrahim or Charls", "status": "Logged"}, {"id": "AUDIT-1778249803298-2QB5GQ3MY", "booked_by": "Aboo", "store": "Board City", "location": "Lenasia", "manager": "Talha/Tinkle", "merchandiser": "Goolab", "purpose": "Product Display Review", "date": "2026-05-12", "time": "08:00", "notes": "Continue unfinished work", "status": "Logged"}, {"id": "AUDIT-1778577831526-UC8WSYE4N", "booked_by": "Bhadresh", "store": "Mega hw witbank", "location": "Ask ladies for address", "manager": "Hashim or faizal", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-12", "time": "08:30", "notes": "Ask hasim first", "status": "Logged"}, {"id": "AUDIT-1778587356259-T9CZ9HJ4Y", "booked_by": "Bhadresh", "store": "Handy joes Delmas", "location": "Ask ladies for address", "manager": "Zuber or salim", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-12", "time": "14:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778847645487-BT6V9084C", "booked_by": "Nikhil", "store": "Kit Kat hazyview", "location": "Hazyview", "manager": "Store manager", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-15", "time": "12:00", "notes": "Check everything", "status": "Logged"}, {"id": "AUDIT-1778575331325-0RN4L1VRY", "booked_by": "Amit", "store": "Power hardware", "location": "Burgersfort", "manager": "Chen", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-18", "time": "07:20", "notes": "Chen +27 (72) 727-2042", "status": "Logged"}, {"id": "AUDIT-1778575410641-WHHIVSGT0", "booked_by": "Amit", "store": "Ace Hardware", "location": "Burgersfort", "manager": "Irfan", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-18", "time": "07:20", "notes": "Irfan +27 82 941 7866", "status": "Logged"}, {"id": "AUDIT-1778575492077-TH0ZHJA0H", "booked_by": "Amit", "store": "Lucky save 2", "location": "Burgersfort", "manager": "Moshin", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-18", "time": "07:20", "notes": "Moshin +27 67 160 7776", "status": "Logged"}, {"id": "AUDIT-1778586600830-3PAUWZBL7", "booked_by": "Amit", "store": "Lucky save 2", "location": "Burgersfort", "manager": "Moshin", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-18", "time": "07:20", "notes": "Moshin +27 67 160 7776", "status": "Logged"}, {"id": "AUDIT-1778586655333-T0ASJ4LQR", "booked_by": "Amit", "store": "Ace Hardware", "location": "Burgersfort", "manager": "Irfan", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-18", "time": "07:20", "notes": "Irfan +27 82 941 7866", "status": "Logged"}, {"id": "AUDIT-1778586922907-VE3R3QZ6P", "booked_by": "Amit", "store": "Power hardware", "location": "Burgersfort", "manager": "Chen", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-18", "time": "07:20", "notes": "Chen +27 (72) 727-2042", "status": "Logged"}, {"id": "AUDIT-1778576337742-1C2YJ4DYL", "booked_by": "Amit", "store": "Al Soud", "location": "Burgersfort", "manager": "Kashi", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-19", "time": "07:20", "notes": "Kashi +27 71 671 6431", "status": "Logged"}, {"id": "AUDIT-1778576450741-QF5DB3TH3", "booked_by": "Amit", "store": "Sehlware hardware", "location": "Sekhukune", "manager": "Nadir", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-19", "time": "07:20", "notes": "Nadir +27 61 616 0693", "status": "Logged"}, {"id": "AUDIT-1778586319051-NL7SATJTY", "booked_by": "Amit", "store": "Sehlware hardware", "location": "Sekhukune", "manager": "Nadir", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-19", "time": "07:20", "notes": "Nadir +27 61 616 0693", "status": "Logged"}, {"id": "AUDIT-1778586351323-YKNEH5SMM", "booked_by": "Amit", "store": "Sehlware hardware", "location": "Sekhukune", "manager": "Nadir", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-19", "time": "07:20", "notes": "Nadir +27 61 616 0693", "status": "Logged"}, {"id": "AUDIT-1778586432617-9YWNB7504", "booked_by": "Amit", "store": "Al Soud", "location": "Burgersfort", "manager": "Kashi", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-19", "time": "07:20", "notes": "Kashi +27 71 671 6431", "status": "Logged"}, {"id": "AUDIT-1778848246121-CGVAG07PS", "booked_by": "Amit", "store": "Mangeras hardware", "location": "Sekhukune", "manager": "Habib", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-20", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848317838-LVIJ1CGKF", "booked_by": "Amit", "store": "Cheap cheap hardware", "location": "Schoonnord", "manager": "Ali", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-20", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848396409-RTM8GSA4W", "booked_by": "Amit", "store": "Bhana and shikh", "location": "Nebo", "manager": "Aarif", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-20", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848503768-3ZXZU34I1", "booked_by": "Amit", "store": "Lucky save", "location": "Jane Furse", "manager": "Aarif", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-20", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848551879-ZED9KIUTN", "booked_by": "Amit", "store": "Hadid hardware", "location": "Monsterlus", "manager": "Noman", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-21", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848596352-KWZ5JV6HO", "booked_by": "Amit", "store": "Choice hw and electrical", "location": "Groblersdal", "manager": "Anish", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-21", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848644915-6GKTVJIM7", "booked_by": "Nikhil", "store": "Kit kat", "location": "Groblersdal", "manager": "Store manager", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-21", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778848685198-88BC278I4", "booked_by": "Amit", "store": "Discount hardware", "location": "Groblersdal", "manager": "Inayat", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-21", "time": "02:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778847449065-KZ6VH1KC2", "booked_by": "Nikhil", "store": "Kit Kat Neilspruit", "location": "Neilspruit", "manager": "Store manager", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-25", "time": "08:00", "notes": "Chk everything", "status": "Logged"}, {"id": "AUDIT-1778848015433-LO38OZO0N", "booked_by": "Nikhil", "store": "Kit Kat acornhoek", "location": "Acornhoek", "manager": "Store manager", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-26", "time": "08:00", "notes": "Check everything", "status": "Logged"}, {"id": "AUDIT-1778847006365-6VB8OTLQA", "booked_by": "Nikhil", "store": "Kit Kat komatipoort", "location": "Komatipoort", "manager": "R J", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-05-28", "time": "08:00", "notes": "New store opening mq QD deco rainproof varnish", "status": "Logged"}, {"id": "AUDIT-1778753319033-63EPKCL5V", "booked_by": "Bhadresh", "store": "Sez hw mahikeng", "location": "Ask ladies for address", "manager": "Ebrahim", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-06-02", "time": "08:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1778753428612-VS8DKF3N2", "booked_by": "Bhadresh", "store": "AK Dist Mking", "location": "Ask ladies for address", "manager": "Irfan", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-06-02", "time": "14:00", "notes": "", "status": "Logged"}, {"id": "AUDIT-1779454251678-ORDE51HRI", "booked_by": "Nikhil", "store": "Buy rite", "location": "Hendrina", "manager": "Ibrahim Or Adnan", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-06-03", "time": "08:00", "notes": "Customer keeps Kalahari mq qd varnish univ roof master deco rainproof", "status": "Logged"}, {"id": "AUDIT-1779454521750-LHNNH6WZV", "booked_by": "Nikhil", "store": "Archie’s", "location": "Hendrina", "manager": "Idrish", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-06-03", "time": "00:00", "notes": "Customet keeps mq qd master deco universal roof liberty varnish hi hiding water based plaster primer", "status": "Logged"}, {"id": "AUDIT-1779454026094-OHRWL9UJY", "booked_by": "Nikhil", "store": "Cassims", "location": "Ermelo", "manager": "Aslam/Mohammed Sadic", "merchandiser": "Goolab", "purpose": "Merchandising", "date": "2026-06-04", "time": "08:00", "notes": "Customer is keeping mq qd deco master deco universal roof 7 in 1 varnish ultimate shine", "status": "Logged"}];
+const REP_COLORS  = {"Aboo": "#F5C400", "Nikhil": "#2D6BA8", "Amit": "#2D8C7A", "Bhadresh": "#C97A3A", "Byron": "#E87BAD"};
+const REP_ORDER   = ["Aboo", "Nikhil", "Amit", "Bhadresh", "Byron"];
+const BUILT_AT    = "2026-05-25 16:00";
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let curYear, curMonth, activeRep = null, selectedDate = null;
+
+const OLY_THEMES = ['theme-light','theme-dark','theme-brand','theme-navy'];
+function olyTheme(t, btn) {
+  document.documentElement.classList.remove(...OLY_THEMES);
+  document.documentElement.classList.add(t);
+  localStorage.setItem('oly-theme', t);
+  document.querySelectorAll('.theme-bar button')
+    .forEach(b => b.classList.toggle('active', b === btn));
+}
+
+function todayObj() {
+  const d = new Date();
+  return { y: d.getFullYear(), m: d.getMonth(), d: d.getDate() };
+}
+
+function init() {
+  const t = todayObj();
+  curYear = t.y; curMonth = t.m;
+  // Sync theme button state
+  const saved = localStorage.getItem('oly-theme') || 'theme-dark';
+  const map = {'theme-light':'L','theme-dark':'D','theme-brand':'B','theme-navy':'N'};
+  document.querySelectorAll('.theme-bar button')
+    .forEach(b => b.classList.toggle('active', b.textContent.trim() === map[saved]));
+  window.addEventListener('resize', onResize);
+  onResize();
+  render();
+}
+
+function onResize() {
+  const wide = window.innerWidth >= 768;
+  document.getElementById('desktopSide').style.display = wide ? 'block' : 'none';
+}
+
+// ── DATA HELPERS ──────────────────────────────────────────────────────────────
+function filtered(year, month) {
+  return BOOKINGS.filter(b => {
+    const d = new Date(b.date);
+    return d.getFullYear() === year && d.getMonth() === month
+      && (!activeRep || b.booked_by === activeRep);
+  });
+}
+
+function byDay(year, month) {
+  const map = {};
+  filtered(year, month).forEach(b => {
+    const k = new Date(b.date).getDate();
+    (map[k] = map[k] || []).push(b);
+  });
+  return map;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() { renderFilters(); renderStats(); renderCalendar(); renderList(); }
+
+const MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+const DAY_LABELS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function renderFilters() {
+  const present = new Set(BOOKINGS.map(b => b.booked_by));
+  const reps = ['All', ...REP_ORDER.filter(r => present.has(r))];
+  document.getElementById('filterBar').innerHTML = reps.map(r => {
+    const active = r === 'All' ? !activeRep : activeRep === r;
+    const col = REP_COLORS[r] || '#888';
+    const sty = active && r !== 'All' ? `background:${col};border-color:${col};` : '';
+    return `<button class="filter-chip${active?' active':''}" style="${sty}"
+              onclick="setRep('${r}')">${r}</button>`;
+  }).join('');
+}
+
+function renderStats() {
+  const bs = filtered(curYear, curMonth);
+  const days  = new Set(bs.map(b => b.date)).size;
+  const stores = new Set(bs.map(b => b.store.toLowerCase())).size;
+  const byRep = {};
+  bs.forEach(b => { byRep[b.booked_by] = (byRep[b.booked_by] || 0) + 1; });
+  const repHtml = REP_ORDER.filter(r => byRep[r]).map(r =>
+    `<div class="stat-divider"></div>
+     <div class="stat-item">
+       <div class="stat-num" style="color:${REP_COLORS[r]||'#F5C400'}">${byRep[r]}</div>
+       <div class="stat-lbl">${r}</div>
+     </div>`
+  ).join('');
+  document.getElementById('statsBar').innerHTML =
+    `<div class="stat-item"><div class="stat-num">${bs.length}</div><div class="stat-lbl">Bookings</div></div>
+     <div class="stat-divider"></div>
+     <div class="stat-item"><div class="stat-num">${days}</div><div class="stat-lbl">Days</div></div>
+     <div class="stat-divider"></div>
+     <div class="stat-item"><div class="stat-num">${stores}</div><div class="stat-lbl">Stores</div></div>
+     ${repHtml}`;
+}
+
+function renderCalendar() {
+  document.getElementById('monthLabel').innerHTML =
+    `${MONTHS[curMonth]} <span>${curYear}</span>`;
+  document.getElementById('dayHeaders').innerHTML =
+    DAY_LABELS.map(d => `<div class="day-hdr">${d}</div>`).join('');
+
+  const dayMap = byDay(curYear, curMonth);
+  const firstDow = new Date(curYear, curMonth, 1).getDay();
+  const daysInM  = new Date(curYear, curMonth + 1, 0).getDate();
+  const prevDays = new Date(curYear, curMonth, 0).getDate();
+  const t = todayObj();
+  let html = '';
+
+  for (let i = firstDow - 1; i >= 0; i--)
+    html += `<div class="cal-cell other-month"><span class="day-num">${prevDays - i}</span></div>`;
+
+  for (let d = 1; d <= daysInM; d++) {
+    const bs = dayMap[d] || [];
+    const isToday = curYear === t.y && curMonth === t.m && d === t.d;
+    const isSel = selectedDate && selectedDate.d === d
+      && selectedDate.m === curMonth && selectedDate.y === curYear;
+    const hasB = bs.length > 0;
+    const dots = bs.slice(0,8).map(b =>
+      `<div class="dot" style="background:${REP_COLORS[b.booked_by]||'#888'}"></div>`
+    ).join('');
+    const badge = bs.length > 3 ? `<div class="booking-count">${bs.length}</div>` : '';
+    html += `<div class="cal-cell${isToday?' today':''}${isSel?' selected':''}${hasB?' has-bookings':''}"
+               ${hasB ? `onclick="selectDay(${d})"` : ''}>
+               <span class="day-num">${d}</span>
+               <div class="booking-dots">${dots}</div>${badge}
+             </div>`;
+  }
+
+  const total = Math.ceil((firstDow + daysInM) / 7) * 7;
+  for (let d = 1; html.split('cal-cell').length - 1 < total; d++)
+    html += `<div class="cal-cell other-month"><span class="day-num">${d}</span></div>`;
+
+  document.getElementById('calGrid').innerHTML = html;
+
+  if (window.innerWidth >= 768 && selectedDate)
+    showDetail(selectedDate.d, selectedDate.m, selectedDate.y, 'desktop');
+}
+
+function renderList() {
+  const bs = filtered(curYear, curMonth);
+  if (!bs.length) {
+    document.getElementById('listView').innerHTML =
+      `<div class="empty-state">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+           <rect x="3" y="4" width="18" height="18" rx="2"/>
+           <line x1="3" y1="10" x2="21" y2="10"/>
+         </svg>
+         No bookings this month</div>`;
+    return;
+  }
+  const grouped = {};
+  bs.forEach(b => { (grouped[b.date] = grouped[b.date] || []).push(b); });
+  document.getElementById('listView').innerHTML = Object.keys(grouped).sort().map(ds => {
+    const label = new Date(ds).toLocaleDateString('en-ZA',
+      { weekday:'long', day:'numeric', month:'long' });
+    return `<div class="list-date-group">
+      <div class="list-date-label">${label}</div>
+      ${grouped[ds].map(buildCard).join('')}
+    </div>`;
+  }).join('');
+}
+
+function buildCard(b) {
+  const col = REP_COLORS[b.booked_by] || '#888';
+  const time = b.time ? `<span class="meta-pill">&#128336; ${b.time}</span>` : '';
+  const mgr  = b.manager ? `<span class="meta-pill">${b.manager}</span>` : '';
+  const notes = b.notes
+    ? `<div class="notes-label">Brief</div><div class="notes-block">${b.notes}</div>`
+    : '';
+  return `
+    <div class="booking-card" style="border-left-color:${col}">
+      <div class="rep-badge" style="color:${col}">
+        <div class="rep-dot" style="background:${col}"></div>${b.booked_by}
+      </div>
+      <div class="store-name">${b.store}</div>
+      <div class="store-meta">
+        <span>&#128205; ${b.location}</span>${mgr}${time}
+        <span class="status-pill">${b.status}</span>
+      </div>
+      ${notes}
+    </div>`;
+}
+
+// ── INTERACTIONS ──────────────────────────────────────────────────────────────
+function selectDay(d) {
+  selectedDate = { d, m: curMonth, y: curYear };
+  renderCalendar();
+  if (window.innerWidth < 768) showDetail(d, curMonth, curYear, 'mobile');
+  else                         showDetail(d, curMonth, curYear, 'desktop');
+}
+
+function showDetail(d, m, y, target) {
+  const dt = new Date(y, m, d);
+  const bs = (byDay(y, m)[d] || []);
+  const label = dt.toLocaleDateString('en-ZA',
+    { weekday: target==='desktop'?'short':'long', day:'numeric', month:'long',
+      year: target==='desktop' ? 'numeric' : undefined });
+  const sub  = bs.length + ' booking' + (bs.length !== 1 ? 's' : '');
+  const body = bs.map(buildCard).join('') ||
+    `<div class="empty-state" style="padding:24px 0">No bookings</div>`;
+
+  if (target === 'mobile') {
+    document.getElementById('sheetDate').textContent = label;
+    document.getElementById('sheetSub').textContent  = sub;
+    document.getElementById('sheetBody').innerHTML   = body;
+    document.getElementById('backdrop').classList.add('open');
+    document.getElementById('mobileSheet').classList.add('open');
+  } else {
+    document.getElementById('ddDate').textContent = label;
+    document.getElementById('ddSub').textContent  = sub;
+    document.getElementById('ddBody').innerHTML   = body;
+  }
+}
+
+function closeSheet() {
+  document.getElementById('backdrop').classList.remove('open');
+  document.getElementById('mobileSheet').classList.remove('open');
+  selectedDate = null;
+  renderCalendar();
+}
+
+function setRep(r) {
+  activeRep = r === 'All' ? null : r;
+  selectedDate = null;
+  if (document.getElementById('mobileSheet').classList.contains('open')) closeSheet();
+  else render();
+  if (!document.getElementById('mobileSheet').classList.contains('open')) render();
+}
+
+function shiftMonth(delta) {
+  curMonth += delta;
+  if (curMonth < 0)  { curMonth = 11; curYear--; }
+  if (curMonth > 11) { curMonth = 0;  curYear++; }
+  selectedDate = null;
+  render();
+}
+
+function goToday() {
+  const t = todayObj();
+  curYear = t.y; curMonth = t.m; selectedDate = null;
+  switchView('cal'); render();
+}
+
+function switchView(v) {
+  const cal  = document.getElementById('calView');
+  const list = document.getElementById('listView');
+  cal.style.display = v === 'cal' ? 'block' : 'none';
+  list.classList.toggle('visible', v === 'list');
+  document.getElementById('navCal').classList.toggle('active', v === 'cal');
+  document.getElementById('navList').classList.toggle('active', v === 'list');
+}
+
+init();
+</script>
+</body>
+</html>
